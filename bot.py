@@ -48,21 +48,24 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
             await update.message.reply_text("⏳ Fetching your result...")
 
+            # Dummy output (replace later with Selenium)
             await update.message.reply_text(
                 f"📊 RESULT:\n\nUsername: {user_data[user_id]['username']}\nSemester: {text}\n\nSGPA: 8.5 (Dummy)"
             )
 
+            # Clear user data (important for security)
             del user_data[user_id]
 
-async def main():
+
+def main():
     app = ApplicationBuilder().token(TOKEN).build()
 
     app.add_handler(CommandHandler("start", start))
     app.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, handle_message))
 
     print("Bot running...")
-    await app.run_polling()
+    app.run_polling()
+
 
 if __name__ == "__main__":
-    import asyncio
-    asyncio.run(main())
+    main()
